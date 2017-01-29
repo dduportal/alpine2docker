@@ -1,6 +1,7 @@
 Vagrant.configure("2") do |config|
 
   config.ssh.username = "alpine"
+  config.ssh.shell = "bash -l"
 
   config.vm.provider "virtualbox" do |vm, override|
 

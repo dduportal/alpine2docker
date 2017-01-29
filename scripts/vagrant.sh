@@ -4,6 +4,9 @@ set -exu
 adduser -s /bin/bash -D "${BASE_USER}"
 echo "${BASE_USER}:${BASE_USER}" | chpasswd
 
+# Effective user configuration
+cat /etc/passwd
+
 SSH_USER_DIR="/home/${BASE_USER}/.ssh"
 
 mkdir -p 700 "${SSH_USER_DIR}"

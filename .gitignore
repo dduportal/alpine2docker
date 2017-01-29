@@ -3,3 +3,4 @@
 *.box
 output*
 packer_cache
+tests/Vagrantfile

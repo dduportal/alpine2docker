@@ -16,12 +16,14 @@ $(BOX_FILE):
 
 prepare-test:
 	vagrant box add --force $(BOX_TEST) $(BOX_FILE)
+	cd $(TEST_DIR) && vagrant init -f -m $(BOX_TEST)
 
 test:
-	cd $(TEST_DIR) && vagrant up
+	cd $(TEST_DIR) && bats ./*.bats
 
 clean-test:
 	cd $(TEST_DIR) && vagrant destroy -f || true
+	cd $(TEST_DIR) && rm -rf Vagrantfile .vagrant
 	vagrant box remove $(BOX_TEST) || true
 	vagrant global-status --prune
 
