@@ -31,6 +31,25 @@ execute_vagrant_ssh_command() {
     execute_vagrant_ssh_command 'sudo whoami' | grep root
 }
 
+@test "SSH does not allow root login" {
+    [ "$(execute_vagrant_ssh_command \
+        'grep PermitRootLogin /etc/ssh/sshd_config' \
+        | grep yes | wc -l )" -eq 0 ]
+}
+
+@test "SSH does not use DNS resolution (faster vagrant ssh)" {
+    execute_vagrant_ssh_command "grep 'UseDNS no' /etc/ssh/sshd_config"
+}
+
+@test "The root filesystem is located on a LVM volume" {
+     execute_vagrant_ssh_command 'sudo df -h | grep "/dev/vg0/lv_root" \
+        | grep "/$" | wc -l'
+}
+
+@test "Swap is enabled" {
+    [ $(execute_vagrant_ssh_command "free -m | grep Swap | awk '{print \$2}'") -ge 0 ]
+}
+
 @test "Docker Client is in version ${DOCKER_VERSION}" {
     execute_vagrant_ssh_command "docker -v" | grep "${DOCKER_VERSION}"
 }
