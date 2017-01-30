@@ -66,6 +66,11 @@ execute_vagrant_ssh_command() {
     execute_vagrant_ssh_command "docker info"
 }
 
+@test "We have a customize folder where default user can write inside" {
+    execute_vagrant_ssh_command "[ -d /var/customize ] \
+        && touch /var/customize/test"
+}
+
 @test "We have a shutdown command" {
     execute_vagrant_ssh_command "which shutdown" | grep '/sbin/shutdown'
 }
