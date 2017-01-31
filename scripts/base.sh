@@ -18,3 +18,7 @@ echo "INFO: Replacing by: poweroff"
 /sbin/poweroff
 EOF
 chmod a+x /sbin/shutdown
+
+# Create a persisted folder for the customized resources
+mkdir -p /var/customize
+chmod -R 777 /var/customize

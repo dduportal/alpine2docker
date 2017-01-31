@@ -10,7 +10,7 @@
         {
             "name": "vbox",
             "type": "virtualbox-iso",
-            "headless": false,
+            "headless": true,
             "vboxmanage": [
                 ["modifyvm","{{.Name}}","--cpus","1"],
                 ["modifyvm","{{.Name}}","--memory","1024"],
@@ -65,7 +65,22 @@
                 "./scripts/sshd.sh",
                 "./scripts/vagrant.sh",
                 "./scripts/sudoers.sh",
-                "./scripts/docker.sh",
+                "./scripts/docker.sh"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "./customize/",
+            "destination": "/var/customize/"
+        },
+        {
+            "type": "shell",
+            "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
+            "environment_vars": [
+                "BASE_USER={{user `BASE_USER`}}"
+            ],
+            "scripts": [
+                "./scripts/customize.sh",
                 "./scripts/clean.sh"
             ]
         }

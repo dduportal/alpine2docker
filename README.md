@@ -8,8 +8,10 @@ If you work solely with Docker, this box lets you keep your Vagrant workflow and
 
 The box is available on [Hashicorp's Atlas](https://atlas.hashicorp.com/dduportal/boxes/alpinedocker), making it very easy to use it:
 
-    $ vagrant init dduportal/alpine2docker
-    $ vagrant up
+```
+$ vagrant init dduportal/alpine2docker
+$ vagrant up
+```
 
 ## [What's in the box ?](https://www.youtube.com/watch?v=1giVzxyoclE)
 
@@ -61,3 +63,18 @@ for a quick feedback loop:
 * `make test`: Run the test suite using vagrant
 * `make clean-test`: Clean any test artifacts or VM
 * `make clean`: Clean everything
+
+### Extension point
+
+If you want to tune the behavior to fit your needs,
+but want to reuse all the build process, here is the workflow
+for VM customization:
+
+* Add this repository as a
+[git submodule](https://git-scm.com/docs/git-submodule)
+of your repository
+* Put in the `customize` folder the content you want to be uploaded to the VM
+  - You can overwrite existing content: it is for demo purpose
+  - The content will be uploaded inside /var/customize
+  - If there is a script `run.sh`, it will be run during box build time
+* Build the VM with the previous instructions
