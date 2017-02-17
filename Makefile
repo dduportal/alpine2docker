@@ -1,5 +1,5 @@
 
-BOX_VERSION := 1.0.0
+BOX_VERSION := 1.1.0
 BOX_NAME := alpine2docker
 BOX_FILE := $(BOX_NAME)-$(BOX_VERSION).box
 BOX_TEST := $(BOX_NAME)-test
