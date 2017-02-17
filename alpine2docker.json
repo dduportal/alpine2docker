@@ -3,7 +3,7 @@
     "variables": {
         "BASE_USER": "alpine",
         "DOCKER_VERSION": "1.13.0",
-        "COMPOSE_VERSION": "1.10.0",
+        "COMPOSE_VERSION": "1.11.1",
         "BOX_VERSION": "latest"
     },
     "builders": [
