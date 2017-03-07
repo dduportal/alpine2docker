@@ -2,8 +2,8 @@
     "description": "Build a minimalistic VM for Docker with Linux Alpine",
     "variables": {
         "BASE_USER": "alpine",
-        "DOCKER_VERSION": "1.13.0",
-        "COMPOSE_VERSION": "1.11.1",
+        "DOCKER_VERSION": "1.13.1",
+        "COMPOSE_VERSION": "1.11.2",
         "BOX_VERSION": "latest"
     },
     "builders": [
