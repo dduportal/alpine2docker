@@ -1,9 +1,12 @@
 
-BOX_VERSION := 1.1.0
-BOX_NAME := alpine2docker
-BOX_FILE := $(BOX_NAME)-$(BOX_VERSION).box
-BOX_TEST := $(BOX_NAME)-test
-TEST_DIR := ./tests
+export BOX_VERSION ?= 1.1.1
+export DOCKER_VERSION ?= 1.13.1
+export COMPOSE_VERSION ?= 1.11.2
+BOX_BASENAME ?= alpine2docker
+BOX_NAME ?= $(BOX_BASENAME)-$(BOX_VERSION)
+export BOX_FILE ?= $(BOX_NAME).box
+BOX_TEST ?= $(BOX_BASENAME)-test
+TEST_DIR ?= ./tests
 
 all: clean box prepare-test test
 
@@ -12,7 +15,7 @@ clean: clean-test clean-box
 box: $(BOX_FILE)
 
 $(BOX_FILE):
-	packer build -var 'BOX_VERSION=$(BOX_VERSION)' $(BOX_NAME).json
+	packer build -var 'BOX_VERSION=$(BOX_VERSION)' $(BOX_BASENAME).json
 
 prepare-test:
 	vagrant box add --force $(BOX_TEST) $(BOX_FILE)
@@ -29,6 +32,6 @@ clean-test:
 
 clean-box:
 	rm -rf output* $(BOX_FILE)
-	rm -rf "$(HOME)/VirtualBox VMs/$(BOX_NAME)"
+	rm -rf "$(HOME)/VirtualBox VMs/$(BOX_BASENAME)"
 
 .PHONY: box prepare-test test all clean clean-test clean-box

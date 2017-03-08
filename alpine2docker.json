@@ -2,9 +2,9 @@
     "description": "Build a minimalistic VM for Docker with Linux Alpine",
     "variables": {
         "BASE_USER": "alpine",
-        "DOCKER_VERSION": "1.13.1",
-        "COMPOSE_VERSION": "1.11.2",
-        "BOX_VERSION": "latest"
+        "DOCKER_VERSION": "{{ env `DOCKER_VERSION`}}",
+        "COMPOSE_VERSION": "{{ env `COMPOSE_VERSION`}}",
+        "BOX_FILE": "{{ env `BOX_FILE`}}"
     },
     "builders": [
         {
@@ -90,7 +90,7 @@
             "type": "vagrant",
             "only": ["vbox"],
             "vagrantfile_template": "vagrantfile-box.tpl",
-            "output": "alpine2docker-{{user `BOX_VERSION`}}.box"
+            "output": "{{user `BOX_FILE`}}"
         }
     ]
 }

@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 BASE_USER=alpine
-DOCKER_VERSION=1.13.0
-COMPOSE_VERSION=1.11.1
+DOCKER_VERSION=1.13.1
+COMPOSE_VERSION=1.11.2
 
 execute_vagrant_ssh_command() {
     vagrant ssh -c "${*}" -- -n -T
