@@ -1,6 +1,37 @@
 
 # CHANGELOG
 
+
+## Not released (1.2.0)
+
+## 17/02/2017 (1.1.0)
+
+- From GH-2:
+  - Moving docker-compose version to 1.11.0
+  - Adding Swap support for containers (cgroup swap and meme accounting)
+  - Making GRSec less aggressive to allow running non alpine linux JVM inside containers
+- From GH-1:
+  - Introducing a customization endpoint to build your own machine
+
+Published on https://atlas.hashicorp.com/dduportal/boxes/alpine2docker/versions/1.1.0
+
+Release hashes:
+- SHA256: 0e6913f6dc14162b1cb04dd920b7f05494de37920fd68a8895eb287c0c485cb6
+- SHA1: f0e51cfa108d94ecdbd6f42f7d394a01ef9a3d03
+- MD5: 892f3acc90489d7be4d278da2fe8abcb
+
+
 ## 29/01/2017 (1.0.0)
 
-* Initial version
+- Initial Release:
+  - Alpine Linux 3.5, virtual edition
+  - Docker 1.13.0
+  - Docker-Compose 1.10.0
+  - No VirtualBox additions
+
+Published on https://atlas.hashicorp.com/dduportal/boxes/alpine2docker/versions/1.0.0
+
+Release hashes:
+- SHA256: 8eb0bfb11efefb211ef508e08a685cf7f7f733b56670ba98bad6270b680a06a0
+- SHA1: a45a297bf892f6ee8f486ee385ee2a1bae583be0
+- MD5: 5b3913b726831c8aa2a9a51314e3a766

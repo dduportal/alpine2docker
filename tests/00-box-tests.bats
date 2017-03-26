@@ -1,8 +1,6 @@
 #!/usr/bin/env bats
 
 BASE_USER=alpine
-DOCKER_VERSION=1.13.1
-COMPOSE_VERSION=1.11.2
 
 execute_vagrant_ssh_command() {
     vagrant ssh -c "${*}" -- -n -T
@@ -50,12 +48,12 @@ execute_vagrant_ssh_command() {
     [ $(execute_vagrant_ssh_command "free -m | grep Swap | awk '{print \$2}'") -ge 0 ]
 }
 
-@test "Docker Client is in version ${DOCKER_VERSION}" {
-    execute_vagrant_ssh_command "docker -v" | grep "${DOCKER_VERSION}"
+@test "Docker Client is in the PATH" {
+    execute_vagrant_ssh_command "which docker"
 }
 
-@test "Docker Compose is in version ${COMPOSE_VERSION}" {
-    execute_vagrant_ssh_command "docker-compose -v" | grep "${COMPOSE_VERSION}"
+@test "Docker Compose is in the PATH and executable" {
+    execute_vagrant_ssh_command "which docker-compose && docker-compose -v"
 }
 
 @test "The default admin user ${BASE_USER} is in the docker group" {
