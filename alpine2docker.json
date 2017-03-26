@@ -2,8 +2,6 @@
     "description": "Build a minimalistic VM for Docker with Linux Alpine",
     "variables": {
         "BASE_USER": "alpine",
-        "DOCKER_VERSION": "{{ env `DOCKER_VERSION`}}",
-        "COMPOSE_VERSION": "{{ env `COMPOSE_VERSION`}}",
         "BOX_FILE": "{{ env `BOX_FILE`}}"
     },
     "builders": [
@@ -56,8 +54,6 @@
             "type": "shell",
             "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
             "environment_vars": [
-                "DOCKER_VERSION={{user `DOCKER_VERSION`}}",
-                "COMPOSE_VERSION={{user `COMPOSE_VERSION`}}",
                 "BASE_USER={{user `BASE_USER`}}"
             ],
             "scripts": [

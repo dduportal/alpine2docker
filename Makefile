@@ -1,7 +1,5 @@
 
-export BOX_VERSION ?= 1.1.1
-export DOCKER_VERSION ?= 1.13.1
-export COMPOSE_VERSION ?= 1.11.2
+export BOX_VERSION ?= 1.2.0
 BOX_BASENAME ?= alpine2docker
 BOX_NAME ?= $(BOX_BASENAME)-$(BOX_VERSION)
 export BOX_FILE ?= $(BOX_NAME).box
