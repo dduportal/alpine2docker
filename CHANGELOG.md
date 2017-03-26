@@ -2,7 +2,12 @@
 # CHANGELOG
 
 
-## Not released (1.2.0)
+## 26/03/2017 (1.2.0)
+
+- From GH-3:
+  - Moving Docker and Compose to "rolling" version based on Edge repository
+- Docker upgraded (by rolling effect) to CE 17.03.0
+- Docker-Compose upgraded (by rolling effect) to 1.11.2
 
 ## 17/02/2017 (1.1.0)
 
