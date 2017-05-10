@@ -64,7 +64,6 @@
       ],
       "scripts": [
         "./scripts/base.sh",
-        "./scripts/sshd.sh",
         "./scripts/vagrant.sh",
         "./scripts/sudoers.sh",
         "./scripts/docker.sh"
@@ -83,6 +82,7 @@
         "BASE_USER={{user `BASE_USER`}}"
       ],
       "scripts": [
+        "./scripts/sshd.sh",
         "./scripts/customize.sh",
         "./scripts/clean.sh"
       ]
