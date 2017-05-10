@@ -1,5 +1,8 @@
 #!/bin/sh
-set -eux
+
+set -eux -o pipefail
+
+uptime && date
 
 #### Configure System to handle Docker capabilities
 
@@ -16,7 +19,7 @@ sed -i 's/quiet/quiet cgroup_enable=memory swapaccount=1/' /boot/extlinux.conf
 echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' \
     | tee -a /etc/apk/repositories
 
-apk --update --no-cache add docker py-pip docker-bash-completion
+apk --no-cache add docker py-pip docker-bash-completion
 
 service docker stop
 addgroup root docker
@@ -27,3 +30,8 @@ rc-update add docker boot
 ### Install Docker-compose
 pip install --no-cache-dir --upgrade pip
 pip install --no-cache-dir "docker-compose"
+
+### Reboot now
+reboot now
+sleep 30
+exit 0

@@ -1,11 +1,14 @@
 #!/bin/sh
-set -uxe
+
+set -eux -o pipefail
+
+uptime && date
 
 # Update system
-apk upgrade -U --available
+apk upgrade -U --available --no-cache
 
 # Install base packages
-apk --update --no-cache add curl bash bash-completion
+apk --no-cache add curl bash bash-completion rsync
 
 # Configure root to use bash
 sed -i 's#/ash#/bash#g' /etc/passwd
