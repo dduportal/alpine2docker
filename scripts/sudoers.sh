@@ -1,7 +1,10 @@
 #!/bin/sh
-set -eux
 
-apk --update --no-cache add sudo
+set -eux -o pipefail
+
+uptime && date
+
+apk --no-cache add sudo
 adduser "${BASE_USER}" wheel
 
 echo "Defaults exempt_group=wheel" > /etc/sudoers

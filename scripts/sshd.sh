@@ -1,5 +1,8 @@
 #!/bin/sh
-set -uxe
+
+set -uxe -o pipefail
+
+uptime && date
 
 # add in order to allow packer ssh access to provision
 # the system, remove here to make box more secure

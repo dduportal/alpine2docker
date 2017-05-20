@@ -1,92 +1,99 @@
 {
-    "description": "Build a minimalistic VM for Docker with Linux Alpine",
-    "variables": {
-        "BASE_USER": "alpine",
-        "BOX_FILE": "{{ env `BOX_FILE`}}"
+  "description": "Build a minimalistic VM for Docker with Linux Alpine",
+  "variables": {
+    "BASE_USER": "alpine",
+    "BOX_FILE": "{{ env `BOX_FILE`}}",
+    "VM_CPUS": "{{ env `VM_CPUS`}}",
+    "VM_MEMORY": "{{ env `VM_MEMORY`}}"
+  },
+  "builders": [
+    {
+      "name": "vbox",
+      "type": "virtualbox-iso",
+      "headless": true,
+      "vboxmanage": [
+        ["modifyvm","{{.Name}}","--cpus","{{user `VM_CPUS`}}"],
+        ["modifyvm","{{.Name}}","--memory","{{user `VM_MEMORY`}}"],
+        ["modifyvm","{{.Name}}","--cableconnected1","on"],
+        ["modifyvm","{{.Name}}","--audio","none"],
+        ["modifyvm","{{.Name}}","--usb","off"]
+      ],
+      "disk_size": 40960,
+      "guest_os_type": "Linux26_64",
+      "iso_urls": [
+        "https://nl.alpinelinux.org/alpine/v3.5/releases/x86_64/alpine-virt-3.5.2-x86_64.iso"
+      ],
+      "iso_checksum": "2258ca975d7b829ea6229d314b2782d4070ec9b7f688392817e562f5a14a34b5",
+      "iso_checksum_type": "sha256",
+      "communicator": "ssh",
+      "http_directory": "./http",
+      "boot_wait": "20s",
+      "boot_command": [
+        "root<enter><wait>",
+        "ifconfig eth0 up && udhcpc -i eth0<enter><wait>",
+        "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
+        "setup-alpine -f answers<enter><wait5>",
+        "root<enter><wait>",
+        "root<enter><wait>",
+        "<wait10>",
+        "y<enter>",
+        "<wait10>",
+        "<wait10>",
+        "<wait10>",
+        "<wait10>",
+        "rc-service sshd stop<enter>",
+        "mount /dev/vg0/lv_root /mnt<enter>",
+        "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
+        "umount /mnt<enter>",
+        "reboot<enter>"
+      ],
+      "guest_additions_mode": "disable",
+      "virtualbox_version_file": ".vbox_version",
+      "ssh_username": "root",
+      "ssh_password": "root",
+      "ssh_wait_timeout": "10m",
+      "shutdown_command": "/sbin/poweroff"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
+      "environment_vars": [
+        "BASE_USER={{user `BASE_USER`}}"
+      ],
+      "scripts": [
+        "./scripts/base.sh",
+        "./scripts/vagrant.sh",
+        "./scripts/sudoers.sh",
+        "./scripts/docker.sh"
+      ]
     },
-    "builders": [
-        {
-            "name": "vbox",
-            "type": "virtualbox-iso",
-            "headless": true,
-            "vboxmanage": [
-                ["modifyvm","{{.Name}}","--cpus","1"],
-                ["modifyvm","{{.Name}}","--memory","1024"],
-                ["modifyvm","{{.Name}}","--cableconnected1","on"],
-                ["modifyvm","{{.Name}}","--audio","none"],
-                ["modifyvm","{{.Name}}","--usb","off"]
-            ],
-            "disk_size": 40960,
-            "guest_os_type": "Linux26_64",
-            "iso_urls": ["https://nl.alpinelinux.org/alpine/v3.5/releases/x86_64/alpine-virt-3.5.1-x86_64.iso"],
-            "iso_checksum": "8092b3d482fb1b7a5cf28c43bc1425c8f2d380e86869c0686c49aa7b0f086ab2",
-            "iso_checksum_type": "sha256",
-            "communicator": "ssh",
-            "http_directory": "./http",
-            "boot_wait": "20s",
-            "boot_command": [
-                "root<enter><wait>",
-                "ifconfig eth0 up && udhcpc -i eth0<enter><wait>",
-                "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
-                "setup-alpine -f answers<enter><wait5>",
-                "root<enter><wait>",
-                "root<enter><wait>",
-                "<wait10>",
-                "y<enter>",
-                "<wait10>",
-                "<wait10>",
-                "rc-service sshd stop<enter>",
-                "mount /dev/vg0/lv_root /mnt<enter>",
-                "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
-                "umount /mnt<enter>",
-                "reboot<enter>"
-            ],
-            "guest_additions_mode": "disable",
-            "virtualbox_version_file": ".vbox_version",
-            "ssh_username": "root",
-            "ssh_password": "root",
-            "ssh_wait_timeout": "10m",
-            "shutdown_command": "/sbin/poweroff"
-        }
-    ],
-    "provisioners": [
-        {
-            "type": "shell",
-            "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
-            "environment_vars": [
-                "BASE_USER={{user `BASE_USER`}}"
-            ],
-            "scripts": [
-                "./scripts/base.sh",
-                "./scripts/sshd.sh",
-                "./scripts/vagrant.sh",
-                "./scripts/sudoers.sh",
-                "./scripts/docker.sh"
-            ]
-        },
-        {
-            "type": "file",
-            "source": "./customize/",
-            "destination": "/var/customize/"
-        },
-        {
-            "type": "shell",
-            "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
-            "environment_vars": [
-                "BASE_USER={{user `BASE_USER`}}"
-            ],
-            "scripts": [
-                "./scripts/customize.sh",
-                "./scripts/clean.sh"
-            ]
-        }
-    ],
-    "post-processors": [
-        {
-            "type": "vagrant",
-            "only": ["vbox"],
-            "vagrantfile_template": "vagrantfile-box.tpl",
-            "output": "{{user `BOX_FILE`}}"
-        }
-    ]
+    {
+      "type": "file",
+      "source": "./customize/",
+      "destination": "/var/customize/",
+      "pause_before": "30s"
+    },
+    {
+      "type": "shell",
+      "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
+      "environment_vars": [
+        "BASE_USER={{user `BASE_USER`}}"
+      ],
+      "scripts": [
+        "./scripts/sshd.sh",
+        "./scripts/customize.sh",
+        "./scripts/clean.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "only": ["vbox"],
+      "vagrantfile_template": "vagrantfile-box.tpl",
+      "output": "{{user `BOX_FILE`}}"
+    }
+  ]
 }
