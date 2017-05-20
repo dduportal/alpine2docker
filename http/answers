@@ -1,5 +1,5 @@
 KEYMAPOPTS="us us"
-HOSTNAMEOPTS="-n alpine35"
+HOSTNAMEOPTS="-n alpine2docker"
 INTERFACESOPTS="auto lo
 iface lo inet loopback
 
@@ -10,7 +10,7 @@ iface eth0 inet dhcp
 DNSOPTS="-d local -n 8.8.8.8 8.8.4.4"
 TIMEZONEOPTS="-z UTC"
 PROXYOPTS="none"
-APKREPOSOPTS="http://dl-cdn.alpinelinux.org/alpine/v3.5/main"
+APKREPOSOPTS="-r"
 SSHDOPTS="-c openssh"
 NTPOPTS="-c openntpd"
 DISKOPTS="-s 1024 -L -m sys /dev/sda"

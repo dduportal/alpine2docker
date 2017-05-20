@@ -16,9 +16,6 @@ sed -i 's/quiet/quiet cgroup_enable=memory swapaccount=1/' /boot/extlinux.conf
 
 
 ### Install Docker
-echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' \
-    | tee -a /etc/apk/repositories
-
 apk --no-cache add docker py-pip docker-bash-completion
 
 service docker stop
