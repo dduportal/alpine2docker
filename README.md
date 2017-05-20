@@ -21,13 +21,13 @@ $ vagrant up
 * Default to NAT network
 * Default to 2 vCPUs and 4 Gb memory
 * OpenSSH server
-* Bash, curl, sudo
+* Bash, curl, sudo, rsync
 * Administrative user *alpine* (password is the same)
-* Docker Engine 1.13.0
-* Docker Compose 1.10.0
+* Docker Engine
+* Docker Compose
 * Docker Bash Completion
 * *NOT in the box:*
-  - No VirtualBox addition (meaning: no shared filesystem with the host)
+  - No VirtualBox addition (meaning: no shared filesystem with the host by default, unless using rsync)
   - No USB
   - No Audio
 
@@ -41,9 +41,9 @@ do so in seconds.
 ### Requirements
 
 * [Make as workflow engine](http://www.gnu.org/software/make/)
-* [Packer as vagrant basebox builder](http://www.packer.io) (at least version 0.12.2)
-* [Vagrant](http://vagrantup.com) (at least version 1.8.5)
-* [VirtualBox](http://www.virtualbox.org) (at least version 5.1.12)
+* [Packer as vagrant basebox builder](http://www.packer.io) (at least version 1.0.0)
+* [Vagrant](http://vagrantup.com) (at least version 1.9.4)
+* [VirtualBox](http://www.virtualbox.org) (at least version 5.1.22)
 * [bats for testing](https://github.com/sstephenson/bats)
 
 ### Building the box
