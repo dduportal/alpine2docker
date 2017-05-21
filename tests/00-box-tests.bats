@@ -1,6 +1,8 @@
 #!/usr/bin/env bats
 
 BASE_USER=alpine
+OS_TYPE="Alpine"
+OS_VERSION="3.6"
 
 execute_vagrant_ssh_command() {
     vagrant ssh -c "${*}" -- -n -T
@@ -28,6 +30,16 @@ execute_vagrant_ssh_command() {
 @test "We have the passwordless sudoers rights inside the VM" {
     execute_vagrant_ssh_command 'sudo whoami' | grep root
 }
+
+@test "Remote VM runs on ${OS_TYPE}, version ${OS_VERSION}" {
+    execute_vagrant_ssh_command "grep NAME /etc/os-release | grep ${OS_TYPE} \
+    && grep VERSION /etc/os-release | grep ${OS_VERSION}"
+}
+
+@test "The GRSec Kernel feature named PAX is in safemode to allows mem_alloc for JVM containers" {
+    [ "$(execute_vagrant_ssh_command 'sudo cat /proc/sys/kernel/pax/softmode')" -eq 1 ]
+}
+
 
 @test "SSH does not allow root login" {
     [ "$(execute_vagrant_ssh_command \
