@@ -4,7 +4,7 @@
 
 ## 11/06/2017 (1.3.0)
 
-- From GH-?
+- From GH-5
   * Alpine Linux upgraded to 3.6.1
   * Docker installed from the "community" apk repository
   * VM Default hostname is now "alpine2docker"
