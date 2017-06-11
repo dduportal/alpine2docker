@@ -4,6 +4,10 @@ set -eux -o pipefail
 
 uptime && date
 
+# Adding the community repository
+CURRENT_REPO="$(cat /etc/apk/repositories )"
+echo "${CURRENT_REPO}" | sed 's/main/community/g' | tee -a /etc/apk/repositories
+
 # Update system
 apk upgrade -U --available --no-cache
 

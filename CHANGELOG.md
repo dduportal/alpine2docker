@@ -2,6 +2,23 @@
 # CHANGELOG
 
 
+## 11/06/2017 (1.3.0)
+
+- From GH-5
+  * Alpine Linux upgraded to 3.6.1
+  * Docker installed from the "community" apk repository
+  * VM Default hostname is now "alpine2docker"
+  * Apk mirror is now auto selected
+
+## 20/05/2017 (1.2.1)
+
+- From GH-4:
+  * Alpine Linux to 3.5.2
+  * Rsync is installed for vagrant share
+  * Docker Engine to 17.05_ce
+  * Docker-Compose to 1.13.0
+  * Pax and GrSec settings applied BEFORE customization
+
 ## 26/03/2017 (1.2.0)
 
 - From GH-3:

@@ -15,7 +15,7 @@ $ vagrant up
 
 ## [What's in the box ?](https://www.youtube.com/watch?v=1giVzxyoclE)
 
-* Guest OS: Alpine Linux 3.5
+* Guest OS: Alpine Linux 3.6
 * LVM root filesystem for any filesystem growing allocation
 * 1 Gb swap enabled
 * Default to NAT network
