@@ -2,10 +2,10 @@
 # CHANGELOG
 
 
-## Not Released Yet (1.3.0)
+## 11/06/2017 (1.3.0)
 
 - From GH-?
-  * Alpine Linux upgraded to 3.6.0
+  * Alpine Linux upgraded to 3.6.1
   * Docker installed from the "community" apk repository
   * VM Default hostname is now "alpine2docker"
   * Apk mirror is now auto selected
