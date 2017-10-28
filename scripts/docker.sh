@@ -30,5 +30,4 @@ pip install --no-cache-dir "docker-compose"
 
 ### Reboot now
 reboot now
-sleep 30
 exit 0
