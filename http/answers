@@ -5,7 +5,7 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
-    hostname alpine35
+    hostname alpine2docker
 "
 DNSOPTS="-d local -n 8.8.8.8 8.8.4.4"
 TIMEZONEOPTS="-z UTC"

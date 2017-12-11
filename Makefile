@@ -1,5 +1,5 @@
 
-export BOX_VERSION ?= 1.4.0
+export BOX_VERSION ?= 1.5.0
 export VM_CPUS ?= 1
 export VM_MEMORY ?= 1024
 BOX_BASENAME ?= alpine2docker

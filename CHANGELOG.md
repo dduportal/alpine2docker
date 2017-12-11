@@ -1,6 +1,13 @@
 
 # CHANGELOG
 
+## 11/12/2017 (1.5.0)
+
+- Upgrade to Alpine Linux 3.7.0
+
+## 28/09/2017 (1.4.0)
+
+- Upgrade Alpine Linux to 3.6.2
 
 ## 11/06/2017 (1.3.0)
 
