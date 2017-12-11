@@ -3,7 +3,8 @@
 
 ## 11/12/2017 (1.5.0)
 
-- Upgrade to Alpine Linux 3.7.0
+- Upgrade to Alpine Linux 3.7.0 (adapting the boot sequence)
+- Relaxing some PaX / GRSec kernel enforcements to allow nested containers (LXC and docker)
 
 ## 28/09/2017 (1.4.0)
 
