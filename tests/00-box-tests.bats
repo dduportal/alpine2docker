@@ -2,7 +2,7 @@
 
 BASE_USER=alpine
 OS_TYPE="Alpine"
-OS_VERSION="3.7"
+OS_VERSION="3.8"
 
 execute_vagrant_ssh_command() {
     vagrant ssh -c "${*}" -- -n -T
@@ -36,11 +36,6 @@ execute_vagrant_ssh_command() {
     && grep VERSION /etc/os-release | grep ${OS_VERSION}"
 }
 
-@test "The GRSec Kernel feature named PAX is in safemode to allows mem_alloc for JVM containers" {
-    [ "$(execute_vagrant_ssh_command 'sudo cat /proc/sys/kernel/pax/softmode')" -eq 1 ]
-}
-
-
 @test "SSH does not allow root login" {
     [ "$(execute_vagrant_ssh_command \
         'grep PermitRootLogin /etc/ssh/sshd_config' \
@@ -65,15 +60,19 @@ execute_vagrant_ssh_command() {
 }
 
 @test "Docker Compose is in the PATH and executable" {
-    execute_vagrant_ssh_command "which docker-compose && docker-compose -v"
+  execute_vagrant_ssh_command "which docker-compose && docker-compose -v"
 }
 
 @test "The default admin user ${BASE_USER} is in the docker group" {
-    execute_vagrant_ssh_command "grep docker /etc/group | grep ${BASE_USER}"
+  execute_vagrant_ssh_command "grep docker /etc/group | grep ${BASE_USER}"
 }
 
 @test "Docker Engine is started and respond correctly without sudo" {
-    execute_vagrant_ssh_command "docker info"
+  execute_vagrant_ssh_command "docker info"
+}
+
+@test "Java command can be run inside container (no Kernel enforcing blocking syscalls)" {
+  execute_vagrant_ssh_command "docker run --rm -t maven:3-alpine java -version"
 }
 
 @test "We have a customize folder where default user can write inside" {
@@ -84,15 +83,15 @@ execute_vagrant_ssh_command() {
 @test "We have a shutdown command" {
     execute_vagrant_ssh_command "which shutdown" | grep '/sbin/shutdown'
 }
-
-@test "We can restart the machine properly" {
-    vagrant reload
-}
-
-@test "We can stop properly the machine" {
-    vagrant halt
-}
-
-@test "We can destroy the vagrant" {
-    vagrant destroy -f
-}
+#
+# @test "We can restart the machine properly" {
+#     vagrant reload
+# }
+#
+# @test "We can stop properly the machine" {
+#     vagrant halt
+# }
+#
+# @test "We can destroy the vagrant" {
+#     vagrant destroy -f
+# }

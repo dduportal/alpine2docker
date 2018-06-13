@@ -1,14 +1,22 @@
 
 # CHANGELOG
 
+## Next release
+
+- Upgrade to Alpine Linux 3.8.0-rc2
+- Upgrade Docker to 18.03.1-r0-CE
+- Upgrade Docker-Compose to 1.21.2
+
 ## 11/12/2017 (1.5.0)
 
 - Upgrade to Alpine Linux 3.7.0 (adapting the boot sequence)
 - Relaxing some PaX / GRSec kernel enforcements to allow nested containers (LXC and docker)
+- Upgrade Docker to 17.12.1-CE
 
 ## 28/09/2017 (1.4.0)
 
 - Upgrade Alpine Linux to 3.6.2
+- Upgrade Docker to 17.05-CE
 
 ## 11/06/2017 (1.3.0)
 
