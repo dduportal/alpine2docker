@@ -3,9 +3,9 @@
 
 ## Next release
 
-- Upgrade to Alpine Linux 3.8.0-rc2
+- Upgrade to Alpine Linux 3.8.0
 - Upgrade Docker to 18.03.1-r0-CE
-- Upgrade Docker-Compose to 1.21.2
+- Upgrade Docker-Compose to 1.22.0
 
 ## 11/12/2017 (1.5.0)
 
