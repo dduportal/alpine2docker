@@ -1,7 +1,7 @@
 
 # CHANGELOG
 
-## Next release
+## 20/07/2017 (1.6.0)
 
 - Upgrade to Alpine Linux 3.8.0
 - Upgrade Docker to 18.03.1-r0-CE
