@@ -1,7 +1,12 @@
 
 # CHANGELOG
 
-## 20/07/2017 (1.6.0)
+## 24/09/2018
+
+- Upgrade to Alpine Linux 3.8.1
+- Upgrade Docker to 18.06.1-r0-CE
+
+## 20/07/2018 (1.6.0)
 
 - Upgrade to Alpine Linux 3.8.0
 - Upgrade Docker to 18.03.1-r0-CE

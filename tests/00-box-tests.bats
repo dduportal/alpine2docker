@@ -83,15 +83,3 @@ execute_vagrant_ssh_command() {
 @test "We have a shutdown command" {
     execute_vagrant_ssh_command "which shutdown" | grep '/sbin/shutdown'
 }
-#
-# @test "We can restart the machine properly" {
-#     vagrant reload
-# }
-#
-# @test "We can stop properly the machine" {
-#     vagrant halt
-# }
-#
-# @test "We can destroy the vagrant" {
-#     vagrant destroy -f
-# }
