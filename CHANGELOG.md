@@ -4,6 +4,7 @@
 
 - Bump Alpine Linux to 3.10.3
 - Bump Docker to 18.09.8
+- Bump Docker-Compose to 1.24.1 as native package
 
 ## 23/06/2019 (1.8.0)
 
