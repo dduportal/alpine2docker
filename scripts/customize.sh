@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -uxe -o pipefail
 
 CUSTOMIZE_DIR="/var/customize"
