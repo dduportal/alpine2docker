@@ -2,7 +2,7 @@
 
 BASE_USER=alpine
 OS_TYPE="Alpine"
-OS_VERSION="3.10"
+OS_VERSION="3.11"
 
 execute_vagrant_ssh_command() {
     vagrant ssh -c "${*}" -- -n -T

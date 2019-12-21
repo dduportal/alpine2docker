@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 21/12/2019 (1.9.0)
+
+- Bump Alpine Linux to 3.11.0
+- Bump Docker to 19.03.5
+
+
 ## 18/11/2019 (1.8.1)
 
 - Bump Alpine Linux to 3.10.3
