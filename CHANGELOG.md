@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 06/01/2020 (1.10.0)
+
+- Generate SHA512 sum during build process
+- Makefile enhancements
+- Bump Alpine Linux to 3.11.2
+
 ## 21/12/2019 (1.9.0)
 
 - Bump Alpine Linux to 3.11.0
