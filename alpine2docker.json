@@ -2,9 +2,7 @@
   "description": "Build a minimalistic VM for Docker with Linux Alpine",
   "variables": {
     "BASE_USER": "alpine",
-    "BOX_FILE": "{{ env `BOX_FILE`}}",
-    "VM_CPUS": "{{ env `VM_CPUS`}}",
-    "VM_MEMORY": "{{ env `VM_MEMORY`}}"
+    "BOX_FILE": "{{ env `BOX_FILE`}}"
   },
   "builders": [
     {
@@ -12,8 +10,8 @@
       "type": "virtualbox-iso",
       "headless": true,
       "vboxmanage": [
-        ["modifyvm","{{.Name}}","--cpus","{{user `VM_CPUS`}}"],
-        ["modifyvm","{{.Name}}","--memory","{{user `VM_MEMORY`}}"],
+        ["modifyvm","{{.Name}}","--cpus","1"],
+        ["modifyvm","{{.Name}}","--memory","1024"],
         ["modifyvm","{{.Name}}","--cableconnected1","on"],
         ["modifyvm","{{.Name}}","--audio","none"],
         ["modifyvm","{{.Name}}","--usb","off"]

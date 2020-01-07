@@ -1,20 +1,27 @@
 
-export BOX_VERSION ?= 1.9.0
-export VM_CPUS ?= 1
-export VM_MEMORY ?= 1024
+BOX_VERSION ?= 1.10.0
+
+TEST_DIR ?= $(CURDIR)/tests
+DIST_DIR ?= $(CURDIR)/dist
+
 BOX_BASENAME ?= alpine2docker
 BOX_NAME ?= $(BOX_BASENAME)-$(BOX_VERSION)
-export BOX_FILE ?= $(BOX_NAME).box
+BOX_FILE ?= $(DIST_DIR)/$(BOX_NAME).box
 BOX_TEST ?= $(BOX_BASENAME)-test
-TEST_DIR ?= ./tests
+
+export BOX_VERSION BOX_FILE
 
 all: clean box prepare-test test
 
 clean: clean-test clean-box
 
 box: $(BOX_FILE)
+	sha512sum $(BOX_FILE) > $(DIST_DIR)/shasum512-$(BOX_VERSION)
 
-$(BOX_FILE):
+$(DIST_DIR):
+	mkdir -p $(DIST_DIR)
+
+$(BOX_FILE): $(DIST_DIR)
 	packer build -var 'BOX_VERSION=$(BOX_VERSION)' $(BOX_BASENAME).json
 
 prepare-test:
@@ -22,7 +29,7 @@ prepare-test:
 	cd $(TEST_DIR) && vagrant init -f -m $(BOX_TEST)
 
 test:
-	cd $(TEST_DIR) && bats ./*.bats
+	cd $(TEST_DIR) && bats $(TEST_DIR)/*.bats
 
 clean-test:
 	cd $(TEST_DIR) && vagrant destroy -f || true
@@ -31,7 +38,6 @@ clean-test:
 	vagrant global-status --prune
 
 clean-box:
-	rm -rf output* $(BOX_FILE)
-	rm -rf "$(HOME)/VirtualBox VMs/$(BOX_BASENAME)"
+	rm -rf $(DIST_DIR) "$(HOME)/VirtualBox VMs/$(BOX_BASENAME)"
 
 .PHONY: box prepare-test test all clean clean-test clean-box
