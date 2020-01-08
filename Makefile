@@ -15,8 +15,10 @@ all: clean box prepare-test test
 
 clean: clean-test clean-box
 
-box: $(BOX_FILE)
-	sha512sum $(BOX_FILE) > $(DIST_DIR)/shasum512-$(BOX_VERSION)
+box: $(BOX_FILE) box-shasum
+
+box-shasum:
+	cd $(DIST_DIR) && sha512sum $(shell basename $(BOX_FILE)) > $(DIST_DIR)/shasum512-$(BOX_VERSION).txt
 
 $(DIST_DIR):
 	mkdir -p $(DIST_DIR)
@@ -40,4 +42,4 @@ clean-test:
 clean-box:
 	rm -rf $(DIST_DIR) "$(HOME)/VirtualBox VMs/$(BOX_BASENAME)"
 
-.PHONY: box prepare-test test all clean clean-test clean-box
+.PHONY: box prepare-test test all clean clean-test clean-box box-shasum
