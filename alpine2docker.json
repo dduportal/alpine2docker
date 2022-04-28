@@ -1,96 +1,121 @@
 {
-  "description": "Build a minimalistic VM for Docker with Linux Alpine",
-  "variables": {
-    "BASE_USER": "alpine",
-    "BOX_FILE": "{{ env `BOX_FILE`}}"
-  },
   "builders": [
     {
-      "name": "vbox",
-      "type": "virtualbox-iso",
-      "headless": true,
-      "vboxmanage": [
-        ["modifyvm","{{.Name}}","--cpus","1"],
-        ["modifyvm","{{.Name}}","--memory","1024"],
-        ["modifyvm","{{.Name}}","--cableconnected1","on"],
-        ["modifyvm","{{.Name}}","--audio","none"],
-        ["modifyvm","{{.Name}}","--usb","off"]
-      ],
-      "disk_size": 40960,
-      "guest_os_type": "Linux26_64",
-      "iso_urls": [
-        "http://dl-cdn.alpinelinux.org/alpine/v3.11/releases/x86_64/alpine-virt-3.11.2-x86_64.iso"
-      ],
-      "iso_checksum": "fbedd5fa113eee18876c293177d251b851bfe496a78b080b13e30ba1fd184bb2",
-      "iso_checksum_type": "sha256",
-      "communicator": "ssh",
-      "http_directory": "./http",
-      "boot_wait": "20s",
       "boot_command": [
         "root<enter><wait>",
-        "ifconfig eth0 up && udhcpc -i eth0<enter><wait>",
+        "ifconfig eth0 up \u0026\u0026 udhcpc -i eth0<enter><wait>",
         "wget -O /tmp/answers http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>",
         "setup-alpine -f /tmp/answers<enter><wait5>",
         "root<enter><wait>",
         "root<enter><wait>",
-        "<wait10><wait10>",
+        "<wait40>",
         "y<enter>",
-        "<wait10><wait10>",
-        "<wait10><wait10>",
-        "<wait10><wait10>",
+        "<wait260>",
         "rc-service sshd stop<enter>",
         "mount /dev/vg0/lv_root /mnt<enter>",
         "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
         "umount /mnt<enter>",
         "reboot<enter>"
       ],
+      "boot_wait": "20s",
+      "communicator": "ssh",
+      "disk_size": 40960,
       "guest_additions_mode": "disable",
-      "virtualbox_version_file": ".vbox_version",
-      "ssh_username": "root",
+      "guest_os_type": "Linux26_64",
+      "headless": true,
+      "http_directory": "./http",
+      "iso_checksum": "sha256:11cb6ceec4967e0089c44268d2cc7b4efbad74f40d962ecec558e1a8fb6f2ac9",
+      "iso_urls": [
+        "https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/x86_64/alpine-virt-3.15.4-x86_64.iso"
+      ],
+      "name": "vbox",
+      "shutdown_command": "/sbin/poweroff",
       "ssh_password": "root",
-      "ssh_wait_timeout": "10m",
-      "shutdown_command": "/sbin/poweroff"
+      "ssh_timeout": "10m",
+      "ssh_username": "root",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "1024"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cableconnected1",
+          "on"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--audio",
+          "none"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--usb",
+          "off"
+        ]
+      ],
+      "virtualbox_version_file": ".vbox_version"
+    }
+  ],
+  "description": "Build a minimalistic VM for Docker with Linux Alpine",
+  "post-processors": [
+    {
+      "only": [
+        "vbox"
+      ],
+      "output": "{{user `BOX_FILE`}}",
+      "type": "vagrant",
+      "vagrantfile_template": "vagrantfile-box.tpl"
     }
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
       "environment_vars": [
         "BASE_USER={{user `BASE_USER`}}"
       ],
+      "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
       "scripts": [
         "./scripts/base.sh",
         "./scripts/vagrant.sh",
         "./scripts/sudoers.sh",
         "./scripts/docker.sh"
-      ]
+      ],
+      "type": "shell"
     },
     {
-      "type": "file",
-      "source": "./customize/",
       "destination": "/var/customize/",
-      "pause_before": "30s"
+      "pause_before": "30s",
+      "source": "./customize/",
+      "type": "file"
     },
     {
-      "type": "shell",
-      "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
       "environment_vars": [
         "BASE_USER={{user `BASE_USER`}}"
       ],
+      "execute_command": "{{ .Vars }} /bin/sh '{{ .Path }}'",
       "scripts": [
         "./scripts/sshd.sh",
         "./scripts/customize.sh",
         "./scripts/clean.sh"
-      ]
+      ],
+      "type": "shell"
     }
   ],
-  "post-processors": [
-    {
-      "type": "vagrant",
-      "only": ["vbox"],
-      "vagrantfile_template": "vagrantfile-box.tpl",
-      "output": "{{user `BOX_FILE`}}"
-    }
-  ]
+  "variables": {
+    "BASE_USER": "alpine",
+    "BOX_FILE": "{{ env `BOX_FILE`}}"
+  }
 }
+
